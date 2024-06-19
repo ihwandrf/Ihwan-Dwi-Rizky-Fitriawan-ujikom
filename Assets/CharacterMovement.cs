@@ -16,13 +16,14 @@ public class CharacterMovement : MonoBehaviour
 
 
     public float moveSpeed = 350;
-    public 
+    public SFXController sfxController;
 
     // Start is called before the first frame update
     void Start()
     {
         control = gameObject.GetComponent<CharacterController>();
         animator = gameObject.GetComponent<Animator>();
+        sfxController = GameObject.FindGameObjectWithTag("SFX Controller").GetComponent<SFXController>();
     }
 
     // Update is called once per frame
@@ -68,5 +69,6 @@ public class CharacterMovement : MonoBehaviour
     {
         animator.SetTrigger("isThrowing");
         Instantiate(foodPrefab, transform.position + new Vector3(0,2,3), Quaternion.identity);
+        sfxController.Throw();
     }
 }

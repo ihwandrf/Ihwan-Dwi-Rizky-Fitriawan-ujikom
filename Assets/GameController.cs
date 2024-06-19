@@ -19,11 +19,13 @@ public class GameController : MonoBehaviour
     public TMP_Text timer;
     public TMP_Text score;
 
+    public SFXController sfxController;
     // Start is called before the first frame update
     void Start()
     {
         timer.SetText(gameTime.ToString());
         StartCoroutine(TimerCountdown());
+        sfxController = GameObject.FindGameObjectWithTag("SFX Controller").GetComponent<SFXController>();
     }
 
     // Update is called once per frame
@@ -42,14 +44,16 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.End))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             isGameOver = true;
         }
 
         if (isGameOver)
         {
-            
+            gameTime = 0;
+            HidePanelMain();
+            ShowGameOverPanel();
         }
     }
 
@@ -72,6 +76,7 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         Time.timeScale = 0;
+        sfxController.GameOver();
         ShowGameOverPanel();
     }
 

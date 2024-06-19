@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Food
   - Animal
+  - SFX Controller
   layers:
   - Default
   - TransparentFX

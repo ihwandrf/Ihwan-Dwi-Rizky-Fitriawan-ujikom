@@ -18,6 +18,7 @@ public class AnimalSpawner : MonoBehaviour
     {
         spawnPoint = new Vector3(0, 0, 21);
         StartCoroutine(SpawnAnimal());
+
     }
 
     // Update is called once per frame
