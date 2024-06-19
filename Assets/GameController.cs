@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
 
     public CanvasGroup panelPause;
     public CanvasGroup panelMain;
+    public CanvasGroup gameOverPanel;
 
     public TMP_Text timer;
     public TMP_Text score;
@@ -22,13 +23,12 @@ public class GameController : MonoBehaviour
     void Start()
     {
         timer.SetText(gameTime.ToString());
+        StartCoroutine(TimerCountdown());
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*gameTime--;
-        timer.SetText(gameTime.ToString());*/
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -41,14 +41,24 @@ public class GameController : MonoBehaviour
                 ContinueGame();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.End))
+        {
+            isGameOver = true;
+        }
+
+        if (isGameOver)
+        {
+            
+        }
     }
 
     public void PauseGame()
     {
+        isPaused = true;
         Time.timeScale = 0;
         HidePanelMain();
         ShowPanelPause();
-        isPaused = true;
     }
 
     public void ContinueGame()
@@ -59,9 +69,28 @@ public class GameController : MonoBehaviour
         isPaused = false;
     }
 
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        ShowGameOverPanel();
+    }
+
+    public void RetryGame()
+    {
+        SceneManager.LoadScene("Main Scene");
+    }
+
     public void ExitMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void ShowGameOverPanel()
+    {
+        gameOverPanel.alpha = 1;
+        gameOverPanel.interactable = true;
+        gameOverPanel.blocksRaycasts = true;
+        gameOverPanel.ignoreParentGroups = true;
     }
 
     public void HidePanelMain()
@@ -94,5 +123,21 @@ public class GameController : MonoBehaviour
         panelPause.interactable = true;
         panelPause.blocksRaycasts = true;
         panelPause.ignoreParentGroups = true;
+    }
+
+    IEnumerator TimerCountdown()
+    {
+        if(gameTime > 0)
+        {
+            gameTime--;
+            timer.SetText(gameTime.ToString());
+            yield return new WaitForSecondsRealtime(1);
+            StartCoroutine(TimerCountdown());
+        }
+        else
+        {
+            isGameOver = true;
+        }
+        
     }
 }

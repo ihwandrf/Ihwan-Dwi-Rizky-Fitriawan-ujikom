@@ -8,6 +8,7 @@ public class CharacterMovement : MonoBehaviour
     public CharacterController control;
     public Animator animator;
 
+    public GameObject foodPrefab;
 
     public bool isGrounded;
     public Vector3 velocity;
@@ -34,7 +35,6 @@ public class CharacterMovement : MonoBehaviour
 
         control.Move(moveDirection * moveSpeed * Time.deltaTime);
 
-        Debug.Log(moveDirection.x);
 
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 0.2f);
@@ -57,5 +57,16 @@ public class CharacterMovement : MonoBehaviour
             animator.SetTrigger("isIdle");
         }
 
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            ThrowFood();
+        }
+
+    }
+
+    public void ThrowFood()
+    {
+        animator.SetTrigger("isThrowing");
+        Instantiate(foodPrefab, transform.position + new Vector3(0,2,3), Quaternion.identity);
     }
 }

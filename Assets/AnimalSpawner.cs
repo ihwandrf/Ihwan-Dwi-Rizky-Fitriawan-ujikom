@@ -55,7 +55,7 @@ public class AnimalSpawner : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(2);
         RandomizeSpawner();
-        Instantiate(spawnPrefab, spawnPoint, Quaternion.EulerAngles(0,135,0));
+        Instantiate(spawnPrefab, spawnPoint, Quaternion.Euler(0,180,0));
 
         StartCoroutine(SpawnAnimal());
     }

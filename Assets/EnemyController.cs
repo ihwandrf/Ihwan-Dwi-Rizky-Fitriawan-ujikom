@@ -22,6 +22,9 @@ public class EnemyController : MonoBehaviour
     {
         control = gameObject.GetComponent<CharacterController>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        /*Instantiate(fillMeter, transform.position, Quaternion.identity);
+        fillMeter.GetComponent<FillMeterController>().hungerFullAmount = fillMax;*/
     }
 
     // Update is called once per frame
@@ -32,7 +35,9 @@ public class EnemyController : MonoBehaviour
 
         control.Move(moveDirection * moveSpeed/50 * Time.deltaTime);
 
-        if(transform.position.z <= player.position.z)
+        fillMeter.GetComponent<FillMeterController>().hungerFillAmount = fillAmount;
+
+        if (transform.position.z <= player.position.z)
         {
             Destroy(gameObject);
         }
