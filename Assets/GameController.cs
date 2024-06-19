@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
 
     public TMP_Text timer;
     public TMP_Text score;
+    public TMP_Text score2;
 
     public int scoreAmount;
 
@@ -65,6 +66,7 @@ public class GameController : MonoBehaviour
         }
 
         score.SetText(scoreAmount.ToString());
+        score2.SetText(scoreAmount.ToString());
     }
 
     public void PauseGame()
