@@ -140,6 +140,10 @@ public class GameController : MonoBehaviour
         panelPause.ignoreParentGroups = true;
     }
 
+    public void PlaySFXDestroy()
+    {
+        sfxController.DestroySFX();
+    }
     IEnumerator TimerCountdown()
     {
         if(gameTime > 0)

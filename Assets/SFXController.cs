@@ -39,6 +39,12 @@ public class SFXController : MonoBehaviour
         sfxSource.clip = sfxGameOver;
         sfxSource.Play();
     }
+
+    public void DestroySFX()
+    {
+        sfxSource.clip = sfxDestroy;
+        sfxSource.Play();
+    }
 }
 
 public class AudioSFX

@@ -46,22 +46,13 @@ public class FoodController : MonoBehaviour
 
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    private void OnTriggerEnter(Collider other)
     {
-        Rigidbody body = hit.collider.attachedRigidbody;
-
-        // no rigidbody
-        if (body == null || body.isKinematic)
+        Debug.Log(other.gameObject);
+        if (other.gameObject.CompareTag("Animal"))
         {
-            return;
+            Debug.Log("nabrak");
+            other.gameObject.GetComponent<EnemyController>().fillAmount += fillAmount;
         }
-
-        // We dont want to push objects below us
-        if (hit.moveDirection.y < -0.3)
-        {
-            return;
-        }
-
-        Debug.Log(hit.gameObject);
     }
 }

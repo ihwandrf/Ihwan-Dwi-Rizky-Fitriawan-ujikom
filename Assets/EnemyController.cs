@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public GameController gameController;
+
     public int fillAmount;
     public int fillMax;
 
@@ -20,6 +22,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         control = gameObject.GetComponent<CharacterController>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
@@ -40,6 +43,13 @@ public class EnemyController : MonoBehaviour
         if (transform.position.z <= player.position.z)
         {
             Destroy(gameObject);
+        }
+
+        if(fillAmount >= fillMax)
+        {
+            Destroy(gameObject);
+            gameController.scoreAmount += scoreWorth;
+            gameController.PlaySFXDestroy();
         }
     }
 }
