@@ -10,6 +10,8 @@ public class CharacterMovement : MonoBehaviour
 
 
     public bool isGrounded;
+    public Vector3 velocity;
+    public float gravityValue = -9.81f;
 
 
     public float moveSpeed = 350;
@@ -28,6 +30,7 @@ public class CharacterMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
 
         Vector3 moveDirection = new Vector3(horizontalInput, 0f, 0f);
+        moveDirection.Normalize();
 
         control.Move(moveDirection * moveSpeed * Time.deltaTime);
 
@@ -35,18 +38,21 @@ public class CharacterMovement : MonoBehaviour
 
         RaycastHit hit;
         isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, 0.2f);
+        velocity.y += gravityValue * Time.deltaTime;
+
+        control.Move(velocity * Time.deltaTime);
 
 
 
-        if(moveDirection.x >= 0)
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             animator.SetTrigger("isMovingRight");
         }
-        else if(moveDirection.x <= 0)
+        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             animator.SetTrigger("isMovingLeft");
         }
-        else if(moveDirection == null)
+        else
         {
             animator.SetTrigger("isIdle");
         }
