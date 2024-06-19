@@ -1,25 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public bool isGameOver = false;
     public bool isPaused = false;
+
+    public int gameTime = 60;
 
     public CanvasGroup panelPause;
     public CanvasGroup panelMain;
 
+    public TMP_Text timer;
+    public TMP_Text score;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        timer.SetText(gameTime.ToString());
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*gameTime--;
+        timer.SetText(gameTime.ToString());*/
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

@@ -9,20 +9,32 @@ public class EnemyController : MonoBehaviour
 
     public float moveSpeed;
 
+    public int scoreWorth;
+
     public CharacterController control;
 
+    public Transform player;
+
+    public GameObject fillMeter;
 
     // Start is called before the first frame update
     void Start()
     {
         control = gameObject.GetComponent<CharacterController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 moveDirection = new Vector3(0, 0, -1f);
+        Vector3 moveDirection = new Vector3(0, 0, -0.01f);
+        moveDirection.Normalize();
 
-        control.Move(moveDirection * moveSpeed * Time.deltaTime);
+        control.Move(moveDirection * moveSpeed/50 * Time.deltaTime);
+
+        if(transform.position.z <= player.position.z)
+        {
+            Destroy(gameObject);
+        }
     }
 }
