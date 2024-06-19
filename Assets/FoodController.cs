@@ -34,6 +34,7 @@ public class FoodController : MonoBehaviour
         Destroy(gameObject);
     }
 
+
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.collider.name);
@@ -43,5 +44,24 @@ public class FoodController : MonoBehaviour
             collision.gameObject.GetComponent<EnemyController>().fillAmount += fillAmount;
         }
 
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+
+        // no rigidbody
+        if (body == null || body.isKinematic)
+        {
+            return;
+        }
+
+        // We dont want to push objects below us
+        if (hit.moveDirection.y < -0.3)
+        {
+            return;
+        }
+
+        Debug.Log(hit.gameObject);
     }
 }

@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject player;
+    public Animator playerAnimator;
+
     public bool isGameOver = false;
     public bool isPaused = false;
 
@@ -19,10 +22,15 @@ public class GameController : MonoBehaviour
     public TMP_Text timer;
     public TMP_Text score;
 
+    public int scoreAmount;
+
     public SFXController sfxController;
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerAnimator = player.GetComponent<Animator>();
+
         timer.SetText(gameTime.ToString());
         StartCoroutine(TimerCountdown());
         sfxController = GameObject.FindGameObjectWithTag("SFX Controller").GetComponent<SFXController>();
@@ -32,7 +40,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Minus))
         {
             if (!isPaused)
             {
@@ -51,10 +59,12 @@ public class GameController : MonoBehaviour
 
         if (isGameOver)
         {
+            GameOver();
             gameTime = 0;
             HidePanelMain();
-            ShowGameOverPanel();
         }
+
+        score.SetText(scoreAmount.ToString());
     }
 
     public void PauseGame()
@@ -75,7 +85,7 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-        Time.timeScale = 0;
+        playerAnimator.SetTrigger("isGameOver");
         sfxController.GameOver();
         ShowGameOverPanel();
     }
